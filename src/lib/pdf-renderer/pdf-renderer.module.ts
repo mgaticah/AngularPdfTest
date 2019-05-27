@@ -6,6 +6,7 @@ import { PdfRendererComponent } from './pdf-renderer.component';
   declarations: [PdfRendererComponent],
   imports: [
     CommonModule
-  ]
+  ],
+  exports: [PdfRendererComponent]
 })
 export class PdfRendererModule { }
