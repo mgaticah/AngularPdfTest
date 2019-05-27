@@ -5,10 +5,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { PdfRendererModule} from '../lib/api_module';
+import { PdfRendererClientComponent } from './pdf-renderer-client/pdf-renderer-client.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    PdfRendererClientComponent
   ],
   imports: [
     BrowserModule,

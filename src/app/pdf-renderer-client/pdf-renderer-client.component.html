@@ -1,0 +1,8 @@
+<p>
+  pdf-renderer-client works!
+</p>
+<app-pdf-renderer src="algo" (loadedEvent)="rendererLoadedEventReceiver($event)">
+</app-pdf-renderer>
+<div>
+  Status:<b>{{rendererLoadedStatus}}</b>
+</div>
