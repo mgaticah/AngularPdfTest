@@ -2,14 +2,14 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { LoadedRouterConfig } from '@angular/router/src/config';
 import { load } from '@angular/core/src/render3';
 import { LoadStatus } from '../utils/enums';
-import { PDFDocumentProxy } from 'ng2-pdf-viewer';
+import { PDFDocumentProxy, PDFProgressData } from 'ng2-pdf-viewer';
 @Component({
   selector: 'app-pdf-renderer',
   templateUrl: './pdf-renderer.component.html',
   styleUrls: ['./pdf-renderer.component.scss']
 })
 export class PdfRendererComponent implements OnInit {
-  @Input() src: string;
+  @Input() pdfSrc: string;
   @Output() loadedEvent: EventEmitter<boolean> = new EventEmitter();
   statusText: string;
   loadStatus: LoadStatus;
@@ -17,8 +17,9 @@ export class PdfRendererComponent implements OnInit {
 
   ngOnInit() {
     this.loadStatus = LoadStatus.Empty;
-    if (this.src !== undefined) {
+    if (this.pdfSrc !== undefined) {
       this.loadPdf();
+      console.log(this.pdfSrc);
     }
   }
   loadPdf() {
@@ -37,8 +38,12 @@ export class PdfRendererComponent implements OnInit {
  pdfLoadingError(error: any) {
   this.loadedEvent.emit(false);
   this.loadStatus = LoadStatus.Error;
-  this.statusText = 'Error en carga';
-
+  this.statusText = error.details;
+  console.error(error);
+}
+onProgress(progressData: PDFProgressData) {
+  // do anything with progress data. For example progress indicator
+console.log(`{{progressData.loaded}} of {{progressData.total}}`);
 }
 
 }

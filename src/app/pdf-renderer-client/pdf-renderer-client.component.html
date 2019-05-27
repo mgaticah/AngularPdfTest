@@ -1,7 +1,7 @@
 <p>
   Renderer Client
 </p>
-<app-pdf-renderer src="http://www.africau.edu/images/default/sample.pdf" (loadedEvent)="rendererLoadedEventReceiver($event)">
+<app-pdf-renderer pdfSrc="http://www.africau.edu/images/default/sample.pdf" (loadedEvent)="rendererLoadedEventReceiver($event)">
 </app-pdf-renderer>
 <div>
   Status:<b>{{rendererLoadedStatus}}</b>
