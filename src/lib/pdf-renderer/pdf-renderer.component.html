@@ -1,4 +1,16 @@
 <div>
   <div>{{statusText}}</div>
-  <div *ngIf="loadStatus==1">{{src}}</div>
+  <div *ngIf="loadStatus==1">
+    <div>
+      {{src}}
+    </div>
+    <div>
+      <pdf-viewer [src]="src" 
+      [render-text]="true"
+      [show-all]="false"
+      style="display: block;"
+      (after-load-complete)="pdfLoaded($event)"
+></pdf-viewer>
+    </div>
+  </div>
 </div>
