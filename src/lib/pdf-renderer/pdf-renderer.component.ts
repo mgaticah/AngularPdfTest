@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-pdf-renderer',
@@ -6,10 +6,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./pdf-renderer.component.scss']
 })
 export class PdfRendererComponent implements OnInit {
-
+  @Input() src: string;
   constructor() { }
 
   ngOnInit() {
+    console.log(this.src);
   }
+
 
 }
