@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnChanges, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { LoadedRouterConfig } from '@angular/router/src/config';
 import { load } from '@angular/core/src/render3';
 import { LoadStatus } from '../utils/enums';
@@ -8,19 +8,16 @@ import { PDFDocumentProxy, PDFProgressData } from 'ng2-pdf-viewer';
   templateUrl: './pdf-renderer.component.html',
   styleUrls: ['./pdf-renderer.component.scss']
 })
-export class PdfRendererComponent implements OnInit {
-  @Input() pdfSrc: string;
+export class PdfRendererComponent implements OnChanges {
+  @Input() pdfSrc: any;
   @Output() loadedEvent: EventEmitter<boolean> = new EventEmitter();
   statusText: string;
   loadStatus: LoadStatus;
   constructor() { }
-
-  ngOnInit() {
-    this.loadStatus = LoadStatus.Empty;
-    if (this.pdfSrc !== undefined) {
-      this.loadPdf();
-      console.log(this.pdfSrc);
-    }
+  validatedSrc:any;
+  ngOnChanges(changes:SimpleChanges)
+  {
+    console.log(changes);
   }
   loadPdf() {
     // mock: inicia carga
