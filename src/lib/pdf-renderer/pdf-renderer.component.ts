@@ -9,18 +9,19 @@ import { PDFDocumentProxy, PDFProgressData } from 'ng2-pdf-viewer';
   styleUrls: ['./pdf-renderer.component.scss']
 })
 export class PdfRendererComponent implements OnChanges {
-  @Input() pdfSrc: any;
+  @Input() pdfSrc: string;
   @Output() loadedEvent: EventEmitter<boolean> = new EventEmitter();
   statusText: string;
   loadStatus: LoadStatus;
+  loadingPercentage:number;
   constructor() { }
-  validatedSrc: any;
+  validatedSrc: string;
   ngOnChanges(changes: SimpleChanges) {
     for (let propName in changes) {
       if (propName == 'pdfSrc') {
-        let change = changes[propName];
-        let curVal = JSON.stringify(change.currentValue);
-        let prevVal = JSON.stringify(change.previousValue);
+        const change = changes[propName];
+        const curVal = change.currentValue;
+        const prevVal = change.previousValue;
         if (curVal != prevVal && curVal != undefined) {
           this.loadPdf(curVal);
         }
@@ -32,9 +33,9 @@ export class PdfRendererComponent implements OnChanges {
       }
     }
   }
-  loadPdf(pdfSrc) {
+  loadPdf(pdfSrc:string) {
+    this.loadingPercentage=0;
     this.validatedSrc=pdfSrc;
-   
    console.log(this.validatedSrc);
     this.loadedEvent.emit(false);
     // mock: cargando
@@ -44,8 +45,8 @@ export class PdfRendererComponent implements OnChanges {
   pdfLoaded(pdf: PDFDocumentProxy) {
     this.loadedEvent.emit(true);
     this.loadStatus = LoadStatus.Loaded;
-    this.statusText = 'Cargado!';
-
+    this.statusText = 'Cargado';
+    
   }
   pdfLoadingError(error: any) {
     this.loadedEvent.emit(false);
@@ -54,8 +55,7 @@ export class PdfRendererComponent implements OnChanges {
     console.error(error);
   }
   onProgress(progressData: PDFProgressData) {
-    // do anything with progress data. For example progress indicator
-    console.log(`{{progressData.loaded}} of {{progressData.total}}`);
+    this.loadingPercentage=(progressData.loaded/progressData.total)*100;
   }
 
 }

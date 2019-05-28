@@ -1,18 +1,21 @@
-<div>
+<div class="pdf-renderer">
   <div>
-    <div>
-      {{pdfSrc}}
+    <div class="pdf-renderer-header">
+      <span>
+          {{validatedSrc}}
+      </span>
+      <span *ngIf="loadStatus>1">
+          <span>{{loadingPercentage|number:0}}%</span>
+          <span>{{statusText}}</span>
+      </span>      
     </div>
-    <div>
-      <pdf-viewer src="{{validatedSrc}}" 
-      [render-text]="true"
-      [show-all]="false"
-      style="display: block;"
-      (after-load-complete)="pdfLoaded($event)"
-      (on-progress)="onProgress($event)"
-      (error)="pdfLoadingError($event)"
-></pdf-viewer>
+    <div class="pdf-container">
+      <pdf-viewer [src]='validatedSrc' [render-text]="false" [show-all]="false"
+        (after-load-complete)="pdfLoaded($event)" (on-progress)="onProgress($event)" (error)="pdfLoadingError($event)">
+      </pdf-viewer>
     </div>
-    <div>{{statusText}}</div>
+    <div class="pdf-renderer-footer">
+      <div *ngIf="loadStatus==3" class="pdf-renderer-error">{{statusText}}</div>
+    </div>
   </div>
 </div>

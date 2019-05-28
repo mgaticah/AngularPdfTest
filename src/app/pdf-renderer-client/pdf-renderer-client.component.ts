@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./pdf-renderer-client.component.scss']
 })
 export class PdfRendererClientComponent implements OnInit {
-
+  pdfUrl: string = 'http://localhost:4200/assets/sample.pdf';
   constructor() { }
   rendererLoadedStatus: boolean;
   ngOnInit() {
