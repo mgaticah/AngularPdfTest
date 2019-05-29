@@ -14,7 +14,7 @@
         <button (click)="goNextPage()">></button>
       </span>
     </div>
-    <div class="pdf-container">
+    <div class="pdf-container gesture__zone" (pan)="onPan($event)">
       <pdf-viewer [src]="validatedSrc" [render-text]="renderText" [show-all]="showAllPages" [(page)]="currentPageNumber"
         (after-load-complete)="pdfLoaded($event)" (on-progress)="onProgress($event)" (error)="pdfLoadingError($event)">
       </pdf-viewer>

@@ -1,8 +1,7 @@
 import { Component, OnChanges, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
-import { LoadedRouterConfig } from '@angular/router/src/config';
-import { load } from '@angular/core/src/render3';
 import { LoadStatus } from '../utils/enums';
 import { PDFDocumentProxy, PDFProgressData } from 'ng2-pdf-viewer';
+
 @Component({
   selector: 'app-pdf-renderer',
   templateUrl: './pdf-renderer.component.html',
@@ -73,6 +72,17 @@ export class PdfRendererComponent implements OnChanges {
   goBackPage() {
     if (this.currentPageNumber > 1)
       this.currentPageNumber--;
+  }
+
+  onPan(event) {
+    if (event.isFinal) {
+      if (event.additionalEvent == 'panup' && this.currentPageNumber < this.pagesNumber)
+        this.currentPageNumber++;
+      else if (event.additionalEvent == 'pandown' && this.currentPageNumber > 1)
+        this.currentPageNumber--;
+
+    }
+
   }
 }
 
