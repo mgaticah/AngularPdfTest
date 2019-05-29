@@ -14,13 +14,17 @@ export class PdfRendererComponent implements OnChanges {
   @Input() emptyStatusText: string = 'No se ha definido un archivo';
   @Input() loadingStatusText: string = 'Cargando...';
   @Input() loadedStatusText: string = 'Archivo cargado';
+  @Input() currentPageNumber: number = 1;
+  @Input() renderText: boolean = false;
+  @Input() showAllPages: boolean = false;
+  @Input() showPageButtons: boolean = true;
   @Output() loadedEvent: EventEmitter<boolean> = new EventEmitter();
 
-  statusText: string;
-  loadStatus: LoadStatus;
+  pagesNumber: number;
   loadingPercentage: number;
   validatedSrc: string;
-
+  statusText: string;
+  loadStatus: LoadStatus;
   constructor() { }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -51,7 +55,7 @@ export class PdfRendererComponent implements OnChanges {
     this.loadedEvent.emit(true);
     this.loadStatus = LoadStatus.Loaded;
     this.statusText = this.loadedStatusText;
-
+    this.pagesNumber = pdf.numPages;
   }
   pdfLoadingError(error: any) {
     this.loadedEvent.emit(false);
@@ -62,7 +66,14 @@ export class PdfRendererComponent implements OnChanges {
   onProgress(progressData: PDFProgressData) {
     this.loadingPercentage = (progressData.loaded / progressData.total) * 100;
   }
-
+  goNextPage() {
+    if (this.currentPageNumber < this.pagesNumber)
+      this.currentPageNumber++;
+  }
+  goBackPage() {
+    if (this.currentPageNumber > 1)
+      this.currentPageNumber--;
+  }
 }
 
 

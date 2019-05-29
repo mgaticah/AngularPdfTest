@@ -2,15 +2,20 @@
   <div>
     <div class="pdf-renderer-header">
       <span>
-          {{validatedSrc}}
+        {{validatedSrc}}
       </span>
       <span *ngIf="loadStatus>1">
-          <span>{{loadingPercentage|number:0}}%</span>
-          <span>{{statusText}}</span>
-      </span>      
+        <span>{{loadingPercentage|number:0}}%</span>
+        <span>{{statusText}}</span>
+      </span>
+      <span *ngIf="loadStatus==1 && showPageButtons==true">
+        <button (click)="goBackPage()"><</button> 
+        {{currentPageNumber}}/{{pagesNumber}} 
+        <button (click)="goNextPage()">></button>
+      </span>
     </div>
     <div class="pdf-container">
-      <pdf-viewer [src]='validatedSrc' [render-text]="false" [show-all]="false"
+      <pdf-viewer [src]="validatedSrc" [render-text]="renderText" [show-all]="showAllPages" [(page)]="currentPageNumber"
         (after-load-complete)="pdfLoaded($event)" (on-progress)="onProgress($event)" (error)="pdfLoadingError($event)">
       </pdf-viewer>
     </div>
